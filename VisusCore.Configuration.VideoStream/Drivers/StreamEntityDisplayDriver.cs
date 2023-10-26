@@ -3,6 +3,7 @@ using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
+using System;
 using System.Threading.Tasks;
 using VisusCore.Configuration.VideoStream.Core.Models;
 using VisusCore.Configuration.VideoStream.ViewModels;
@@ -28,6 +29,16 @@ public class StreamEntityDisplayDriver : ContentPartDisplayDriver<StreamEntityPa
         IUpdateModel updater,
         UpdatePartEditorContext context)
     {
+        if (part is null)
+        {
+            throw new ArgumentNullException(nameof(part));
+        }
+
+        if (context is null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
         var viewModel = new StreamEntityEditViewModel();
 
         await context.Updater.TryUpdateModelAsync(viewModel, Prefix);

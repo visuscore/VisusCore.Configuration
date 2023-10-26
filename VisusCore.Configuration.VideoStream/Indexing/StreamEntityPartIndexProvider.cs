@@ -12,8 +12,19 @@ public class StreamEntityPartIndexProvider : ContentPartIndexProvider<StreamEnti
     {
     }
 
-    protected override StreamEntityPartIndex CreateIndex(StreamEntityPart part, ContentItem contentItem) =>
-        new()
+    protected override StreamEntityPartIndex CreateIndex(StreamEntityPart part, ContentItem contentItem)
+    {
+        if (part is null)
+        {
+            throw new ArgumentNullException(nameof(part));
+        }
+
+        if (contentItem is null)
+        {
+            throw new ArgumentNullException(nameof(contentItem));
+        }
+
+        return new()
         {
             ContentItemId = contentItem.ContentItemId,
             ContentItemVersionId = contentItem.ContentItemVersionId,
@@ -23,4 +34,5 @@ public class StreamEntityPartIndexProvider : ContentPartIndexProvider<StreamEnti
             Enabled = part.Enabled,
             Name = part.Name,
         };
+    }
 }
